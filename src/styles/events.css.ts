@@ -131,3 +131,50 @@ export const startText = style({
   borderRadius: "14px",
   background: "rgba(59,130,246,0.10)",
 });
+
+/* Mobile controls container: hidden on desktop */
+export const mobileControls = style({
+  display: "block",
+  marginTop: "0.75rem",
+  "@media": { "screen and (min-width: 768px)": { display: "none" } },
+});
+
+/* 3x3 pad grid centered */
+export const padGrid = style({
+  display: "grid",
+  gridTemplateColumns: "repeat(3, 56px)",
+  gridTemplateRows: "repeat(3, 56px)",
+  gap: "8px",
+  justifyContent: "center",
+  alignItems: "center",
+  margin: "0 auto",
+});
+
+/* round buttons */
+export const padBtn = style({
+  width: 56,
+  height: 56,
+  borderRadius: "50%",
+  border: `1px solid ${vars.colors.border}`,
+  background: "rgba(59,130,246,0.12)",
+  color: vars.colors.text,
+  fontWeight: 800,
+  cursor: "pointer",
+  boxShadow: `0 0 10px ${vars.colors.primary}33`,
+  transition: "transform .1s ease, background .15s ease, box-shadow .15s ease",
+  selectors: {
+    "&:active": { transform: "scale(0.96)" },
+    "&:hover": { background: "rgba(59,130,246,0.22)", boxShadow: `0 0 14px ${vars.colors.primary}66` },
+  },
+});
+
+/* center button used for pause/resume */
+export const pauseBtn = style([
+  padBtn,
+  {
+    background: vars.colors.primary,
+    border: "none",
+    color: "#fff",
+    boxShadow: `0 4px 14px ${vars.colors.primary}99`,
+  },
+]);
