@@ -1,6 +1,8 @@
 import { globalStyle } from "@vanilla-extract/css";
 import { vars } from "./theme.css";
 
+export const __vanilla_globals__ = true;
+
 // Baseline layout
 globalStyle("html, body, #root", {
   height: "100%",

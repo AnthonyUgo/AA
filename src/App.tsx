@@ -3,8 +3,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom";
 import { FaHome, FaCalendarAlt, FaShoppingBag, FaInfoCircle } from "react-icons/fa";
 
+import Leaderboard, { saveScore } from "./components/Leaderboard";
+import SnakeGame from "./components/SnakeGame";
+import { eventsSection, eventsInner, headline, card } from "./styles/events.css";
 import { themeClass } from "./styles/theme.css";
-import "./styles/global.css.ts"; // make sure this file is imported once
+import { __vanilla_globals__ } from "./styles/global.css.ts"; // if your file is named global.css.ts, change this path
+void __vanilla_globals__; // satisfies `noUncheckedSideEffectImports`
 import { appRoot } from "./styles/layout.css";
 import { navBar, navInner, logoLink, logoImg, navIcons, navIconLink } from "./styles/nav.css";
 import { heroSection, heroLogo, comingSoon, ctaBtn } from "./styles/hero.css";
@@ -19,6 +23,14 @@ function ModalPortal({ open, children }: { open: boolean; children: React.ReactN
 export default function App() {
   const [visible, setVisible] = useState(false);
   const [open, setOpen] = useState(false);
+
+  // Track if #events is the active section
+  const [eventsActive, setEventsActive] = useState<boolean>(window.location.hash === "#events");
+  useEffect(() => {
+    const onHash = () => setEventsActive(window.location.hash === "#events");
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, []);
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 500);
@@ -77,6 +89,20 @@ export default function App() {
         <button onClick={() => setOpen(true)} className={ctaBtn}>
           Join the Waitlist
         </button>
+      </section>
+
+      {/* EVENTS */}
+      <section id="events" className={eventsSection}>
+        <div className={eventsInner}>
+          <div className={card}>
+            <div className={headline}>
+              Update on the location for the functions coming soon — but in the meantime…
+            </div>
+            <SnakeGame active={eventsActive} onGameOver={(score) => saveScore(score)} />
+          </div>
+
+          <Leaderboard />
+        </div>
       </section>
 
       {/* MODAL (Portal) */}
